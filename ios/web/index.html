@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#100e0b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="桌面时钟">
+<link rel="apple-touch-icon" href="icon-180.png">
+<title>桌面时钟</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="boot">正在启动…</div>
+<div id="err"></div>
+
+<!-- 桌面时钟 -->
+<div id="clockView" class="view active">
+  <div class="left">
+    <div class="year"><b id="cYear">2026</b> 年</div>
+    <div class="date">
+      <span class="m" id="cMonth">11月</span><span class="d" id="cDay">19</span>
+      <span class="w" id="cWeek">星期四</span>
+    </div>
+    <div class="lunar" id="cLunar">农历十月十一</div>
+    <div class="pillars" id="cPillars">丙午年 · 己亥月 · 丁酉日</div>
+    <div class="term" id="cTerm"></div>
+    <div class="marks" id="cMarks"></div>
+    <div class="wear" id="cWear"></div>
+    <div class="toolbar">
+      <button id="btnCal">万年历</button>
+      <button id="btnAdd">加事件</button>
+      <button id="btnChime" class="on">报时 开</button>
+      <button id="btnTheme">浅色</button>
+    </div>
+  </div>
+  <div class="right">
+    <div class="clock"><span class="hm" id="cHm">--:--</span><span class="sec" id="cSec">:--</span></div>
+    <div class="evhead">今 日 与 近 期</div>
+    <ul class="events" id="cEvents"></ul>
+  </div>
+</div>
+
+<!-- 月历 -->
+<div id="calView" class="view">
+  <header>
+    <button class="nav" id="prevM">‹</button>
+    <div class="title"><span id="calTitle">2026 年 11 月</span><span id="calSub"></span></div>
+    <button class="nav" id="nextM">›</button>
+    <button class="ghost" id="todayBtn">今天</button>
+    <button class="ghost" id="backClock">时钟</button>
+  </header>
+  <div class="grid" id="calGrid"></div>
+  <div class="cal-foot">
+    <div class="lg">
+      <span><i style="background:#d9b45c"></i>吉星</span>
+      <span><i style="background:#cf5b4f"></i>红煞</span>
+      <span><i style="background:#5f9f7b"></i>偷修</span>
+      <span><i style="background:#9a7fc0"></i>四离四绝</span>
+      <span><i style="background:#efe9dc"></i>穿衣色（底边）</span>
+    </div>
+    <div id="calFootInfo"></div>
+  </div>
+</div>
+
+<!-- 生日提醒 -->
+<div id="remind">
+  <div class="rm-card">
+    <div class="rm-tag">生 日 提 醒</div>
+    <div class="rm-title" id="remindTitle"></div>
+    <div class="rm-body" id="remindBody"></div>
+    <div class="rm-time" id="remindTime"></div>
+  </div>
+</div>
+
+<!-- 日详情 -->
+<div id="sheet" class="sheet"><div class="sheet-in" id="sheetIn"></div></div>
+
+<!-- 加事件 -->
+<div id="addSheet" class="sheet"><div class="sheet-in">
+  <h3>添加事件</h3>
+  <label>日期<input type="date" id="evDate"></label>
+  <label>时间<input type="time" id="evTime"></label>
+  <label>内容<input type="text" id="evTitle" maxlength="40" placeholder="如：体检 / 交房租 / 生日"></label>
+  <label class="chk"><input type="checkbox" id="evRemind" checked style="flex:0 0 auto;width:auto"> 到点提醒（自定义提醒）</label>
+  <div class="row"><button id="evSave">保存</button><button class="ghost" id="evCancel">取消</button></div>
+  <div class="evlist" id="evList"></div>
+</div></div>
+
+<script src="caldata.js"></script>
+<script src="engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+:root{
+  --bg1:#1b1712; --bg2:#0e0c0a;
+  --panel:#1a1712; --panel2:#211d16; --cell:#1a1712; --cellout:#141109;
+  --ink:#f3ecdd; --ink2:#b9ad97; --ink3:#7d7466;
+  --line:#332d24; --line2:#241f18; --line3:#2b251d;
+  --gold:#d9b45c; --red:#cf5b4f; --green:#5f9f7b; --purple:#9a7fc0; --brown:#c08a4e;
+  --chip-gold-bg:#241e12; --chip-gold-bd:#5a4a22; --chip-gold-fg:#e8c979;
+  --chip-red-bg:#241513;  --chip-red-bd:#5c2a24;  --chip-red-fg:#ef8b80;
+  --chip-green-bg:#131b16;--chip-green-bd:#26402f;--chip-green-fg:#8fc9a8;
+  --chip-purple-bg:#1a1420;--chip-purple-bd:#413253;--chip-purple-fg:#bda6d8;
+  --chip-brown-bg:#221a11; --chip-brown-bd:#4e3721; --chip-brown-fg:#d9a568;
+  --sheetbg:rgba(0,0,0,.6);
+  --ev-red:#e0796b; --ev-purple:#b49ad6; --ev-brown:#d0a05c;
+  --holiday-fg:#e0705f; --work-fg:#d0a05c; --hn-fg:#d0645a;
+  --sw-bd:#6b6355;
+}
+body.light{
+  --bg1:#f8f3e8; --bg2:#e8e1d1;
+  --panel:#fffdf8; --panel2:#f4ecdf; --cell:#fffdf8; --cellout:#eee7d8;
+  --ink:#2a241b; --ink2:#5f5546; --ink3:#8c8171;
+  --line:#ded4c1; --line2:#e9e0cf; --line3:#e5dbc9;
+  --gold:#9c7415; --red:#b8342b; --green:#2f7f5f; --purple:#6b4a8c; --brown:#8a5522;
+  --chip-gold-bg:#fdf3d8; --chip-gold-bd:#e2c88d; --chip-gold-fg:#8a6a12;
+  --chip-red-bg:#fdeae7;  --chip-red-bd:#e8b3ac;  --chip-red-fg:#b8342b;
+  --chip-green-bg:#e9f5ee;--chip-green-bd:#a9cec2;--chip-green-fg:#2f7f5f;
+  --chip-purple-bg:#f3edf9;--chip-purple-bd:#c4b2da;--chip-purple-fg:#6b4a8c;
+  --chip-brown-bg:#f9f1e6; --chip-brown-bd:#d9c2a6; --chip-brown-fg:#8a5522;
+  --sheetbg:rgba(40,32,22,.35);
+  --ev-red:#b8342b; --ev-purple:#6b4a8c; --ev-brown:#8a5522;
+  --holiday-fg:#c0392b; --work-fg:#a8701a; --hn-fg:#b8342b;
+  --sw-bd:#9a9183;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  background:radial-gradient(120% 120% at 50% 0%,var(--bg1) 0%,var(--bg2) 100%);
+  color:var(--ink);
+  font-family:-apple-system,"Noto Sans CJK SC","Noto Sans SC","PingFang SC",sans-serif;
+  overflow:hidden;
+  transition:background .25s ease,color .25s ease;
+}
+.view{display:none;height:100%;width:100%}
+.view.active{display:flex}
+
+/* ---------- 桌面时钟 ---------- */
+#clockView{padding:4vmin 4vmin 4vmin calc(4vmin + 5vw);gap:4vmin;align-items:stretch}
+.left{flex:1.15;display:flex;flex-direction:column;justify-content:center;min-width:0}
+.right{flex:1;display:flex;flex-direction:column;justify-content:center;min-width:0;
+  border-left:1px solid var(--line);padding-left:4vmin}
+
+.year{font-size:2.88vmin;letter-spacing:.5em;color:var(--ink3)}
+.year b{color:var(--ink2);font-weight:500}
+.date{line-height:1;margin:1.6vmin 0 2.2vmin;display:flex;align-items:baseline;gap:1.2vmin}
+.date .m{font-size:8.4vmin;font-weight:300;color:var(--ink2);letter-spacing:.02em}
+.date .d{font-size:19.2vmin;font-weight:700;letter-spacing:-.03em}
+.date .w{font-size:4.08vmin;color:var(--gold);margin-left:1vmin;letter-spacing:.2em}
+.lunar{font-size:3.84vmin;color:var(--ink2);letter-spacing:.05em}
+.pillars{font-size:3.24vmin;color:var(--ink3);margin-top:1.2vmin;letter-spacing:.08em}
+.marks{display:flex;flex-wrap:wrap;gap:1.2vmin;margin-top:2.6vmin}
+.chip{font-size:2.76vmin;padding:.5vmin 1.4vmin;border:1px solid var(--line);border-radius:1vmin;
+  color:var(--ink2);background:var(--panel);white-space:nowrap}
+.chip.gold{color:var(--chip-gold-fg);border-color:var(--chip-gold-bd);background:var(--chip-gold-bg)}
+.chip.red{color:var(--chip-red-fg);border-color:var(--chip-red-bd);background:var(--chip-red-bg)}
+.chip.green{color:var(--chip-green-fg);border-color:var(--chip-green-bd);background:var(--chip-green-bg)}
+.chip.purple{color:var(--chip-purple-fg);border-color:var(--chip-purple-bd);background:var(--chip-purple-bg)}
+.chip.brown{color:var(--chip-brown-fg);border-color:var(--chip-brown-bd);background:var(--chip-brown-bg)}
+.term{font-size:3.24vmin;color:var(--gold);margin-top:1.8vmin;letter-spacing:.03em}
+.term b{font-weight:600}
+.wear{display:flex;align-items:center;gap:1.4vmin;margin-top:2.4vmin;font-size:3.6vmin;color:var(--ink2)}
+.wear .sw{width:3.6vmin;height:3.6vmin;border-radius:50%;border:1px solid var(--sw-bd)}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:2vmin;margin-top:3.4vmin}
+button{font-family:inherit;font-size:3.12vmin;color:var(--ink);background:var(--panel);
+  border:1px solid var(--line);border-radius:1.2vmin;padding:1.4vmin 3vmin;cursor:pointer}
+button:active{background:var(--panel2)}
+button.ghost{background:transparent;color:var(--ink2)}
+button.on{border-color:var(--chip-gold-bd);color:var(--gold)}
+button.off{color:var(--ink3)}
+
+.clock{font-variant-numeric:tabular-nums;line-height:1;display:flex;align-items:baseline;gap:.6vmin}
+.clock .hm{font-size:22.8vmin;font-weight:200;letter-spacing:-.02em}
+.clock .sec{font-size:6vmin;color:var(--ink3);font-weight:300}
+.evhead{font-size:2.88vmin;color:var(--ink3);letter-spacing:.35em;margin:3.4vmin 0 1.6vmin}
+.events{list-style:none;overflow:auto;max-height:38vmin;padding-right:1vmin}
+.events li{display:flex;align-items:baseline;gap:1.6vmin;padding:1.1vmin 0;
+  border-bottom:1px solid var(--line2);font-size:3.12vmin}
+.events li .t{color:var(--ink3);font-size:2.64vmin;min-width:11vmin}
+.events li .n{color:var(--ink);flex:1}
+.events li.today .t{color:var(--gold)}
+.events li .k{font-size:2.4vmin;color:var(--ink3)}
+.events li .k.gold{color:var(--gold)}
+.events li .k.red{color:var(--ev-red)}
+.events li .k.purple{color:var(--ev-purple)}
+.events li .k.brown{color:var(--ev-brown)}
+.empty{color:var(--ink3);font-size:3.12vmin;padding:2vmin 0}
+
+/* ---------- 月历 ---------- */
+#calView{flex-direction:column;padding:2.6vmin 3vmin 2vmin}
+header{display:flex;align-items:center;gap:1.6vmin;padding-bottom:1.8vmin;border-bottom:1px solid var(--line);flex:0 0 auto}
+header .title{flex:1 1 auto;min-width:0;display:flex;align-items:baseline;gap:2vmin;overflow:hidden}
+header .title #calTitle{font-size:5.04vmin;font-weight:600;letter-spacing:.06em;white-space:nowrap}
+header .title #calSub{font-size:2.76vmin;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header button{flex:0 0 auto}
+.nav{font-size:6vmin;line-height:1;padding:.6vmin 2.4vmin}
+.grid{flex:1;display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:5vmin repeat(6,1fr);
+  gap:1px;background:var(--line);margin-top:1.6vmin;border:1px solid var(--line)}
+.wd{background:var(--panel2);display:flex;align-items:center;justify-content:center;
+  font-size:2.64vmin;color:var(--ink3);letter-spacing:.2em}
+.wrow .cell{margin-right:1px;margin-bottom:1px}
+.wrow:last-child .cell{margin-bottom:0}
+.wd:last-child{margin-right:0}
+.wd.sun{color:var(--red)}
+.cell{background:var(--cell);padding:.6vmin .8vmin;position:relative;display:flex;flex-direction:column;
+  overflow:hidden;cursor:pointer;color:var(--ink)}
+.cell.out{background:var(--cellout);opacity:.5}
+.cell.today{outline:2px solid var(--gold);outline-offset:-2px}
+.cell .n{font-size:3.6vmin;font-weight:600;line-height:1.1;color:inherit}
+.cell.sun .n{color:var(--red)}
+.cell .l{font-size:2.28vmin;color:var(--ink3);margin-top:.3vmin}
+.cell .g{font-size:2.28vmin;color:var(--ink2);margin-top:.3vmin}
+.cell .b{display:flex;gap:.6vmin;position:absolute;right:.8vmin;top:1vmin}
+.cell .b i{width:1.2vmin;height:1.2vmin;border-radius:50%;display:block}
+.cell .star{position:absolute;right:.8vmin;top:1vmin;font-size:2.16vmin;color:var(--gold)}
+.cell .wear{position:absolute;left:0;right:0;bottom:0;height:.7vmin}
+.cell.holiday .n{color:var(--holiday-fg)}
+.cell.work .n{color:var(--work-fg)}
+.cell .hn{font-size:2.04vmin;color:var(--hn-fg);margin-top:.2vmin;white-space:nowrap;overflow:hidden}
+.cal-foot{display:flex;justify-content:space-between;font-size:2.52vmin;color:var(--ink3);padding-top:1.4vmin}
+.cal-foot .lg{display:flex;gap:2vmin}
+.cal-foot .lg span{display:flex;align-items:center;gap:.6vmin}
+.cal-foot .lg i{width:1.2vmin;height:1.2vmin;border-radius:50%;display:inline-block}
+
+/* ---------- 弹层 ---------- */
+.sheet{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--sheetbg);display:none;align-items:flex-end;z-index:9}
+.sheet.open{display:flex}
+.sheet-in{width:100%;background:var(--panel2);border-top:1px solid var(--line);color:var(--ink);
+  border-radius:2.4vmin 2.4vmin 0 0;padding:3vmin 4vmin;max-height:82%;overflow:auto}
+.sheet-in h3{font-size:4.08vmin;font-weight:600;margin-bottom:1vmin;display:flex;justify-content:space-between}
+.sheet-in h3 .close{font-size:3.6vmin;color:var(--ink3)}
+.sheet-in .lunar-big{font-size:3.12vmin;color:var(--ink2);margin-bottom:2vmin}
+.kv{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2vmin 3vmin;font-size:2.88vmin}
+.kv div{display:flex;justify-content:space-between;border-bottom:1px dashed var(--line3);padding:.7vmin 0}
+.kv div span:first-child{color:var(--ink3)}
+.sheet-in label{display:flex;align-items:center;gap:2vmin;font-size:3.12vmin;margin:1.6vmin 0;color:var(--ink2)}
+.sheet-in input{flex:1;background:var(--panel);border:1px solid var(--line);color:var(--ink);
+  font-family:inherit;font-size:3.12vmin;padding:1.4vmin;border-radius:1vmin}
+.row{display:flex;gap:2vmin;margin-top:2.4vmin}
+.row button{flex:1}
+.evlist{margin-top:1.6vmin}
+.evlist div{display:flex;justify-content:space-between;font-size:2.76vmin;color:var(--ink2);
+  padding:.9vmin 0;border-bottom:1px solid var(--line2)}
+.evlist .del{color:var(--red);padding:0 1vmin}
+
+@media (orientation:portrait){
+  .grid{grid-template-rows:6vmin repeat(6,11vmin)}
+  .cell .n{font-size:4.08vmin}
+  .cell .l,.cell .g{font-size:2.88vmin}
+  header .title #calTitle{font-size:6vmin}
+  header .title #calSub{display:none}
+  #clockView{flex-direction:column;padding:6vmin}
+  .right{border-left:none;border-top:1px solid var(--line);padding-left:0;padding-top:4vmin}
+  .clock .hm{font-size:26.4vmin}
+  .date .d{font-size:21.6vmin}
+}
+
+/* ---------- 兜底：不支持 CSS 变量 / 旧 WebView ---------- */
+@supports not (color: var(--x)) {
+  body{background:#100e0b;color:#f3ecdd}
+  .year,.pillars,.lunar,.evhead,.events li .t,.events li .k,.cal-foot,.header .title #calSub{color:#b9ad97}
+  .date .m{color:#b9ad97}
+  .date .w,.term,.events li.today .t,.cell .star{color:#d9b45c}
+  button{color:#f3ecdd;background:#1a1712;border-color:#332d24}
+  .chip{color:#b9ad97;background:#1a1712;border-color:#332d24}
+  .chip.gold{color:#e8c979;background:#241e12;border-color:#5a4a22}
+  .chip.red{color:#ef8b80;background:#241513;border-color:#5c2a24}
+  .chip.green{color:#8fc9a8;background:#131b16;border-color:#26402f}
+  .chip.purple{color:#bda6d8;background:#1a1420;border-color:#413253}
+  .chip.brown{color:#d9a568;background:#221a11;border-color:#4e3721}
+  .grid{background:#332d24;border-color:#332d24}
+  .wd{background:#211d16;color:#7d7466}
+  .wd.sun{color:#cf5b4f}
+  .cell{background:#1a1712;color:#f3ecdd}
+  .cell.out{background:#141109}
+  .cell .n{color:#f3ecdd}
+  .cell.sun .n{color:#cf5b4f}
+  .cell .l{color:#7d7466}
+  .cell .g{color:#b9ad97}
+  .cell.holiday .n{color:#e0705f}
+  .cell.work .n{color:#d0a05c}
+  header{border-color:#332d24}
+  .sheet-in{background:#211d16;color:#f3ecdd}
+  .kv div{border-color:#2b251d}
+  .evlist div,.events li{border-color:#241f18}
+  .sheet-in input{background:#1a1712;color:#f3ecdd;border-color:#332d24}
+  .wear,.events li .n{color:#f3ecdd}
+  .empty{color:#7d7466}
+}
+
+/* ---------- 启动/错误提示（任何 WebView 都可见） ---------- */
+#boot{position:fixed;left:0;right:0;top:44%;text-align:center;color:#f3ecdd;
+  font-size:3.4vmin;letter-spacing:.3em;z-index:99}
+#err{position:fixed;left:0;right:0;top:0;color:#ffd6d0;background:#5a1f1a;
+  font-size:2.6vmin;padding:1.4vmin 2vmin;z-index:100;display:none;line-height:1.5}
+
+/* ---------- 旧引擎（不支持 grid）：行布局 ---------- */
+@supports not (display:grid) {
+  .grid{display:flex;flex-direction:column}
+  .whead{display:flex;flex:0 0 auto;height:5vmin}
+  .whead .wd{flex:1 1 0;min-width:0;margin-right:1px}
+  .whead .wd:last-child{margin-right:0}
+  .wrow{display:flex;flex:0 0 auto;height:calc((100vh - 30vmin) / 6)}
+  .wrow .cell{flex:1 1 0;min-width:0;margin-right:1px;margin-bottom:1px}
+  .wrow .cell:last-child{margin-right:0}
+  .wrow:last-child .cell{margin-bottom:0}
+}
+
+/* ---------- 生日/佛诞提醒 ---------- */
+#remind{position:fixed;left:0;right:0;top:0;bottom:0;z-index:60;display:none;
+  align-items:center;justify-content:center;background:rgba(0,0,0,.72)}
+#remind.show{display:flex}
+.rm-card{background:#fffdf6;color:#241f18;border-radius:3vmin;padding:5vmin 7vmin;text-align:center;
+  box-shadow:0 0 6vmin rgba(255,214,120,.55);border:2px solid #d9b45c;max-width:78%}
+.rm-tag{font-size:2.8vmin;letter-spacing:.6em;color:#a8802a;margin-bottom:2vmin}
+.rm-title{font-size:6vmin;font-weight:700;letter-spacing:.04em;line-height:1.25}
+.rm-body{font-size:3.4vmin;color:#6b5c46;margin-top:2vmin;letter-spacing:.08em}
+.rm-time{font-size:2.6vmin;color:#a8802a;margin-top:2.4vmin}
