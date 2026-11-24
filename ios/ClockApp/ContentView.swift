@@ -23,13 +23,29 @@ struct ClockWebView: UIViewRepresentable {
             wv.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
         }
         UIApplication.shared.isIdleTimerDisabled = true
+        context.coordinator.attach(wv)
+        UNUserNotificationCenter.current().delegate = context.coordinator
         return wv
     }
 
     func updateUIView(_ uiView: WKWebView, context: Context) {}
 
-    final class Coordinator: NSObject, WKScriptMessageHandler {
+    final class Coordinator: NSObject, WKScriptMessageHandler, UNUserNotificationCenterDelegate {
+        private weak var web: WKWebView?
+        private var previousBrightness: CGFloat?
         private var restoreWork: DispatchWorkItem?
+
+        func attach(_ view: WKWebView) {
+            web = view
+            // 回到前台时重新排一次提醒（与 Android 每天/启动同步一致）
+            NotificationCenter.default.addObserver(self,
+                selector: #selector(onActive),
+                name: UIApplication.didBecomeActiveNotification, object: nil)
+        }
+
+        @objc private func onActive() {
+            web?.evaluateJavaScript("window.__syncAlarms&&window.__syncAlarms()", completionHandler: nil)
+        }
 
         func userContentController(_ userContentController: WKUserContentController,
                                    didReceive message: WKScriptMessage) {
@@ -44,8 +60,14 @@ struct ClockWebView: UIViewRepresentable {
             }
         }
 
+        // 前台也显示通知横幅（与 Android 一致）
+        func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                    willPresent notification: UNNotification,
+                                    withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+            completionHandler([.banner, .sound, .list])
+        }
+
         private func remindNow(title: String, text: String) {
-            // 通知
             let content = UNMutableNotificationContent()
             content.title = title
             content.body = text
@@ -54,11 +76,14 @@ struct ClockWebView: UIViewRepresentable {
                                             content: content,
                                             trigger: UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false))
             UNUserNotificationCenter.current().add(req)
-            // 最高亮度 3 分钟
             DispatchQueue.main.async {
+                if self.previousBrightness == nil { self.previousBrightness = UIScreen.main.brightness }
                 UIScreen.main.brightness = 1.0
                 self.restoreWork?.cancel()
-                let work = DispatchWorkItem { UIScreen.main.brightness = 0.5 }
+                let work = DispatchWorkItem {
+                    if let b = self.previousBrightness { UIScreen.main.brightness = b }
+                    self.previousBrightness = nil
+                }
                 self.restoreWork = work
                 DispatchQueue.main.asyncAfter(deadline: .now() + 180, execute: work)
             }
@@ -83,7 +108,7 @@ struct ClockWebView: UIViewRepresentable {
                                                 content: content, trigger: trigger)
                 center.add(req)
                 count += 1
-                if count >= 100 { break }
+                if count >= 60 { break }   // iOS 最多 64 条待发通知，留余量
             }
         }
     }

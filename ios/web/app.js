@@ -172,7 +172,7 @@
       if (at > now) out.push({ at: at, title: '提醒：' + e.title, body: p.m + '月' + p.d + '日 ' + e.time });
     });
     out.sort(function (a, b) { return a.at - b.at; });
-    return out.slice(0, 100);
+    return out.slice(0, iOSBridge ? 60 : 100);
   }
   function syncAlarms() {
     var list = buildAlarmSchedule(400);
@@ -560,6 +560,7 @@
     return false;
   };
   window.__alarmList = buildAlarmSchedule;
+  window.__syncAlarms = function () { syncAlarms(); };
   window.__testRemind = fireReminder;
   window.__showReminder = function (t, b) { lastNativeTs = Date.now(); fireReminder(t, b); };
   renderClock(); tick();
