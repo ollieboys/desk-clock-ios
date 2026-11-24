@@ -1,0 +1,7 @@
+name: test-macos
+on: workflow_dispatch
+jobs:
+  t:
+    runs-on: macos-latest
+    steps:
+      - run: echo hi && sw_vers && xcodebuild -version
